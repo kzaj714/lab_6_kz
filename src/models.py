@@ -24,14 +24,14 @@ class Apartment(BaseModel):
     rooms: Dict[str, Room]
 
     @staticmethod
-    def from_json_file(file_path: str) -> Dict[str,'Apartment']:
+    def from_json_file(file_path: str) -> Dict[str, 'Apartment']:
         data = None
         with open(file_path, 'r') as file:
             data = json.load(file)
         assert isinstance(data, dict), "Expected a dictionary of apartments"
         return {key: Apartment(**apartment) for key, apartment in data.items()}
 
-    
+
 class Tenant(BaseModel):
     name: str
     apartment: str
@@ -42,13 +42,13 @@ class Tenant(BaseModel):
     date_agreement_to: str
 
     @staticmethod
-    def from_json_file(file_path: str) -> Dict[str,'Tenant']:
+    def from_json_file(file_path: str) -> Dict[str, 'Tenant']:
         data = None
         with open(file_path, 'r') as file:
             data = json.load(file)
         assert isinstance(data, dict), "Expected a dictionary of tenants"
         return {key: Tenant(**tenant) for key, tenant in data.items()}
-    
+
 
 class Transfer(BaseModel):
     amount_pln: float
@@ -56,6 +56,7 @@ class Transfer(BaseModel):
     settlement_year: int | None
     settlement_month: int | None
     tenant: str
+    type: str = "rent"
 
     @staticmethod
     def from_json_file(file_path: str) -> List['Transfer']:
